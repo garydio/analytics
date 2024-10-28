@@ -1,0 +1,64 @@
+<!-- Google Form 페이지에 추가할 코드 -->
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '8665063550199678');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=8665063550199678&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+    <script>
+    window.addEventListener('load', function() {
+        // Google Form의 제출 버튼을 찾습니다
+        const submitButton = document.querySelector('[role="button"]');
+        
+        if (submitButton) {
+            submitButton.addEventListener('click', function() {
+                // 폼 제출 시도를 감지합니다
+                checkFormSubmission();
+            });
+        }
+        
+        // 폼 제출 완료 확인을 위한 함수
+        function checkFormSubmission() {
+            // MutationObserver를 사용하여 DOM 변경을 감지합니다
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    // 제출 완료 페이지로 이동했는지 확인
+                    if (document.title.includes('응답이 기록되었습니다') || 
+                        document.body.innerText.includes('응답이 기록되었습니다')) {
+                        // Facebook Pixel 이벤트 발생
+                        fbq('track', 'Lead');
+                        // 완료되면 observer 중지
+                        observer.disconnect();
+                    }
+                });
+            });
+            
+            // 전체 document를 관찰합니다
+            observer.observe(document.documentElement, {
+                childList: true,
+                subtree: true
+            });
+        }
+    });
+    </script>
+</head>
+<body>
+    <!-- Google Form iframe 또는 내용이 여기에 들어갑니다 -->
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSepXy7jqPZYKATqQzNoABGFCrH6U438umBwp5CNI-RbNFHFaQ/viewform?usp=send_form" width="100%" height="800px" frameborder="0"></iframe>
+</body>
+</html>
